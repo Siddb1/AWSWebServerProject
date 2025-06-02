@@ -1,4 +1,5 @@
 <h1>Welcome To My First Website</h1>
+
 Here’s a simple example of a web page with an image using HTML and CSS:
 
 HTML (index.html)
@@ -17,7 +18,7 @@ Copy the code
   </header>
   <main>
     <p>This is a simple web page with an image:</p>
-    <img src="https://th.bing.com/th/id/R.a713738faa750a4062940ad1ab25931b?rik=KS8rZ5JLbG%2fnZQ&riu=http%3a%2f%2fclipart-library.com%2fimages%2fpc7r5rbLi.jpg&ehk=zT%2fBGrTMQ3t6OYKw9iFzuijxsr5fIlH70hbd6Rf0aBQ%3d&risl=&pid=ImgRaw&r=0" alt="A beautiful scenery" class="image">
+    <img src="example.jpg" alt="A beautiful scenery" class="image">
   </main>
   <footer>
     <p>© 2025 My Website</p>
