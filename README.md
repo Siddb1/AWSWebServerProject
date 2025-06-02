@@ -102,7 +102,9 @@ git push origin main
 8. Access Your Website
 Open a browser and visit:
 
+```bash
 http://<EC2_PUBLIC_IP>
+```
 
 9. (Optional) Set Up HTTPS with SSL/TLS
 ```bash
