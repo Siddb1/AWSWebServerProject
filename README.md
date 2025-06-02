@@ -2,20 +2,24 @@
 
 This project sets up a basic Apache web server on an Amazon EC2 instance using Amazon Linux 2. It serves a static HTML page hosted in this GitHub repository.
 
+---
+
 ## 🚀 Features
 
 - Apache HTTP Server setup on EC2
 - Static website deployment (`index.html`)
-- GitHub version control
+- GitHub-based version control
+- Automatic deployment via post-receive hook (optional)
+- HTTPS support with Certbot (optional)
 
 ---
 
 ## 📦 Prerequisites
 
 - AWS account with EC2 access
-- Key pair for SSH
-- Security group allowing port 80 (HTTP)
-- Git installed on EC2 instance
+- SSH key pair
+- EC2 security group allowing port 80 (HTTP)
+- Git installed on the EC2 instance
 
 ---
 
@@ -23,121 +27,92 @@ This project sets up a basic Apache web server on an Amazon EC2 instance using A
 
 ### 1. Launch EC2 and Connect
 
-Create an Amazon Linux 2 EC2 instance and SSH into it:
+Launch an Amazon Linux 2 EC2 instance and SSH into it:
 
 ```bash
 ssh -i your-key.pem ec2-user@<EC2_PUBLIC_IP>
-2. Install Git and Web Server
-Update the Instance:
-
-Run the following commands to update the package lists:
-sudo yum update -y    # Amazon Linux
-
-Install Git:
-Install Git by running:
-sudo yum install git -y    # Amazon Linux
-
-Install Apache
-
-sudo yum install httpd -y    # Amazon Linux
-
-Start the Web Server:
-
-Start the web server:
-sudo systemctl start httpd    # Apache
-
-Enable Web Server on Boot:
-
-Ensure the web server starts on reboot:
-sudo systemctl enable httpd    # Apache
-
-4. Set Up a Git Repository for the Web Server
-Navigate to Web Directory:
-
-Apache:
+2. Install Git and Apache
+bash
+Copy
+Edit
+sudo yum update -y
+sudo yum install git -y
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+3. Set Up Git Repository in Web Directory
+bash
+Copy
+Edit
 cd /var/www/html
-
-Initialize a Git Repository:
-
-Run:
 sudo git init
-Configure Git User:
+Configure Git (if not already done):
 
-Set up Git user information:
+bash
+Copy
+Edit
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
-5. Add and Commit Web Content
-Create a Basic HTML File:
-
-Apache:
+4. Add and Commit Initial HTML File
+bash
+Copy
+Edit
 echo "<h1>Hello, World!</h1>" | sudo tee index.html
-
-Stage and Commit the File:
-
-Run:
 sudo git add index.html
 sudo git commit -m "Initial commit with index.html"
-6. Set Up a Remote Git Repository (Optional)
-Create a Repository on GitHub:
+5. Link to Remote GitHub Repository (Optional)
+Create a repository on GitHub, then link it:
 
-Log in to GitHub and create a new repository.
-Link to Remote Repository:
-
-Connect your local repository to GitHub:
+bash
+Copy
+Edit
 sudo git remote add origin https://github.com/username/repository.git
 sudo git branch -M main
 sudo git push -u origin main
-7. Set Up a Post-Receive Hook for Automatic Deployment
-Create a Post-Receive Hook:
-
-Navigate to the Git hooks directory:
-cd /var/www/html/.git/hooks    # Apache
-
-Create the post-receive Hook:
-
-Create the hook script:
+6. Set Up Post-Receive Hook for Auto Deployment (Optional)
+bash
+Copy
+Edit
+cd /var/www/html/.git/hooks
 sudo nano post-receive
-Add the following content to the script:
+Add this to the post-receive file:
+
+bash
+Copy
+Edit
 #!/bin/bash
-GIT_WORK_TREE=/var/www/html git checkout -f   # Apache
+GIT_WORK_TREE=/var/www/html git checkout -f
+Make it executable:
 
-Save and exit.
-Make the Hook Executable:
-
-Run:
+bash
+Copy
+Edit
 sudo chmod +x post-receive
-8. Push Changes from Your Local Machine
-Clone the Repository Locally:
+7. Deploy Updates from Local Machine
+On your local machine:
 
-Clone the GitHub repository to your local machine:
+bash
+Copy
+Edit
 git clone https://github.com/username/repository.git
 cd repository
-Make Changes to the Website:
-
-Modify index.html or other files locally.
-Commit and Push Changes:
-
-Stage, commit, and push the changes:
+# make changes to index.html
 git add .
 git commit -m "Updated website content"
 git push origin main
-Deploy Changes Automatically:
+⚙️ If using post-receive hook, changes will auto-deploy to the EC2 web server.
 
-The changes will be automatically deployed to your EC2 instance thanks to the post-receive hook.
-9. Access Your Website
-View Your Website:
-Open a web browser and navigate to http://your-ec2-public-ip to view your deployed website.
-10. Set Up HTTPS with SSL/TLS (Optional)
-Install Certbot:
+8. Access Your Website
+Open a browser and visit:
 
-Install Certbot for Apache:
-sudo yum install certbot python3-certbot-apache -y   # Apache
-
-Run Certbot:
-
-Obtain and install the SSL certificate:
-sudo certbot --apache    # Apache
-Follow the Prompts:
-
-Certbot will guide you through securing your website with HTTPS.
-This step-by-step guide should help you set up a web server project on an EC2 instance using Git, complete with automatic deployment and optional HTTPS setup.
+cpp
+Copy
+Edit
+http://<EC2_PUBLIC_IP>
+9. (Optional) Set Up HTTPS with SSL/TLS
+bash
+Copy
+Edit
+sudo yum install certbot python3-certbot-apache -y
+sudo certbot --apache
+Follow the interactive prompts to secure your site with HTTPS.
