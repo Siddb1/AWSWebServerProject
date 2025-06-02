@@ -31,7 +31,7 @@ Launch an Amazon Linux 2 EC2 instance and SSH into it:
 
 ```bash
 ssh -i your-key.pem ec2-user@<EC2_PUBLIC_IP>
-2. Install Git and Apache
+### 2. Install Git and Apache
 bash
 Copy
 Edit
@@ -40,7 +40,7 @@ sudo yum install git -y
 sudo yum install httpd -y
 sudo systemctl start httpd
 sudo systemctl enable httpd
-3. Set Up Git Repository in Web Directory
+### 3. Set Up Git Repository in Web Directory
 bash
 Copy
 Edit
@@ -53,14 +53,14 @@ Copy
 Edit
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
-4. Add and Commit Initial HTML File
+### 4. Add and Commit Initial HTML File
 bash
 Copy
 Edit
 echo "<h1>Hello, World!</h1>" | sudo tee index.html
 sudo git add index.html
 sudo git commit -m "Initial commit with index.html"
-5. Link to Remote GitHub Repository (Optional)
+### 5. Link to Remote GitHub Repository (Optional)
 Create a repository on GitHub, then link it:
 
 bash
@@ -69,7 +69,7 @@ Edit
 sudo git remote add origin https://github.com/username/repository.git
 sudo git branch -M main
 sudo git push -u origin main
-6. Set Up Post-Receive Hook for Auto Deployment (Optional)
+### 6. Set Up Post-Receive Hook for Auto Deployment (Optional)
 bash
 Copy
 Edit
@@ -88,7 +88,7 @@ bash
 Copy
 Edit
 sudo chmod +x post-receive
-7. Deploy Updates from Local Machine
+### 7. Deploy Updates from Local Machine
 On your local machine:
 
 bash
@@ -102,14 +102,14 @@ git commit -m "Updated website content"
 git push origin main
 ⚙️ If using post-receive hook, changes will auto-deploy to the EC2 web server.
 
-8. Access Your Website
+### 8. Access Your Website
 Open a browser and visit:
 
 cpp
 Copy
 Edit
 http://<EC2_PUBLIC_IP>
-9. (Optional) Set Up HTTPS with SSL/TLS
+### 9. (Optional) Set Up HTTPS with SSL/TLS
 bash
 Copy
 Edit
